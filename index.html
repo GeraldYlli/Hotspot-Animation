@@ -1,0 +1,108 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotspot</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <section class="bike-hotspot">
+      <h1 class="bike-hotspot__heading">Hotspot Animation</h1>
+
+      <div class="map">
+        <div class="map-item" style="top: 25%; left: 34%;">
+          <a class="marker marker1" href="#marker1"></a>
+        </div>
+
+        <div class="map-item" style="top: 72%; left: 92%;">
+          <a class="marker marker2" href="#marker2"></a>
+        </div>
+
+        <img class="base-image" src="img/bike.png" alt="" />
+      </div>
+
+      <div class="content-aside">
+        <aside id="marker1" class="map-popup">
+          <div class="map-popup-content">
+            <div class="popup-close-mobile-style">
+              <h3 class="popup-title">Luci integrate</h3>
+              <a class="popup-close" href="#"></a>
+            </div>
+            <p class="popup-text">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic
+            </p>
+            <img src="img/bike-part.png" alt="" />
+          </div>
+        </aside>
+
+        <aside id="marker2" class="map-popup">
+          <div class="map-popup-content">
+            <div class="popup-close-mobile-style">
+              <h3 class="popup-title">Extractor flue 2</h3>
+              <a class="popup-close" href="#"></a>
+            </div>
+            <p class="popup-text">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. It has
+              survived not only five centuries, but also the leap into
+              electronic
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </body>
+
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      jQuery(function ($) {
+        $("a.popup-close").click(function (e) {
+          e.preventDefault();
+          $(this).closest(".map-popup").removeClass("open");
+          $(".map.container").removeClass("map-zoom");
+          $("a.marker").removeClass("marker-zoom-out");
+          $(".map-item").removeClass("remove");
+          $("body").removeClass("overflow-disable");
+        });
+
+        $("a.marker").click(function (e) {
+          $("body").toggleClass("overflow-disable");
+          e.preventDefault();
+          e.stopPropagation();
+
+          var href = $(this).attr("href");
+          $(href).toggleClass("open");
+          $(".map.container").toggleClass("map-zoom");
+          $(".marker").toggleClass("marker-zoom-out");
+          $(".map-item").toggleClass("remove");
+          $(this).parent().toggleClass("remove");
+
+          // Get Marker Top and Left Coordinates
+          let inlineStyle = $(this).parent().attr("style");
+          let splitStyle = inlineStyle.split(";");
+          let splitNumberTop = splitStyle[0].split(":");
+          let splitNumberLeft = splitStyle[1].split(":");
+          let usableNumberTop = splitNumberTop[1];
+          let usableNumberLeft = splitNumberLeft[1];
+          $(".bike-hotspot .map").css({
+            "transform-origin": usableNumberTop + " " + usableNumberLeft
+          });
+        });
+      });
+    });
+  </script>
+</html>
